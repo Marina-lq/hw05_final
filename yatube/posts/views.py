@@ -101,6 +101,7 @@ def post_edit(request, post_id):
         {'form': form, 'post': post}
     )
 
+
 @login_required
 def add_comment(request, post_id):
     # Получите пост
@@ -112,7 +113,6 @@ def add_comment(request, post_id):
         comment.post = post
         comment.save()
     return redirect('posts:post_detail', post_id=post_id)
-
 
 
 @login_required
