@@ -1,11 +1,8 @@
-from django.contrib.auth import get_user_model
+
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from posts.models import Post
-from posts.models import Group
-
-User = get_user_model()
+from posts.models import Post, Group, User
 
 
 class PaginatorViewsTest(TestCase):

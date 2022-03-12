@@ -1,12 +1,6 @@
-# posts/tests/test_urls.py
-# posts/tests/test_urls.py
-from django.contrib.auth import get_user_model
+
 from django.test import TestCase, Client
-from posts.models import Post
-from posts.models import User
-
-
-User = get_user_model()
+from posts.models import Post, User
 
 
 class PostsURLTests(TestCase):

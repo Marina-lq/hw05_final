@@ -17,7 +17,14 @@
   <img class="card-img my-2" src="{{ im.url }}">
 {% endthumbnail %}
   <p>{{ post.text }}</p>
-  {% if not forloop.last %}<hr>{% endif %}
+  {% if post.id %}
+<a href="{% url 'posts:post_detail' post.id %}">подробная информация </a>
+{% endif %}
+<p><a href="{% url 'post:profile' post.author %}">
+  все посты пользователя
+</a></p>
+{% if not forloop.last %}<hr>{% endif %}
 {% endfor %}
-      {% include 'posts/includes/paginator.html' %}
+
+{% include 'posts/includes/paginator.html' %}
 {% endblock %}

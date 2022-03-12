@@ -1,20 +1,17 @@
 from django.shortcuts import get_object_or_404, render
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import redirect
 
 from .forms import PostForm, CommentForm
-from .models import Group, Post, Follow
-
-User = get_user_model()
+from .models import Group, Post, Follow, User
 
 POSTS_PER_PAGE = 10
 
 
 def index(request):
     post_list = Post.objects.all()
-    paginator = Paginator(post_list, 10)
+    paginator = Paginator(post_list, POSTS_PER_PAGE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
@@ -40,20 +37,18 @@ def group_posts(request, slug):
 
 
 def profile(request, username):
-    user_profile = get_object_or_404(User, username=username)
-    author = User.objects.get(username=username)
+    author = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=author)
     paginator = Paginator(posts, POSTS_PER_PAGE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     post_count = posts.count
     user = request.user
-    following = user.is_authenticated and user_profile.following.exists()
     context = {
         'author': author,
         'page_obj': page_obj,
         'post_count': post_count,
-        'following': following
+        'user': user
     }
     return render(request, "posts/profile.html", context)
 
@@ -87,7 +82,7 @@ def post_create(request):
 
 @login_required
 def post_edit(request, post_id):
-    post = Post.objects.get(pk=post_id)
+    post = get_object_or_404(Post, pk=post_id)
     form = PostForm(request.POST or None, files=request.FILES or None,
                     instance=post)
     if form.is_valid():
@@ -138,6 +133,6 @@ def profile_unfollow(request, username):
     author = get_object_or_404(User, username=username)
     profile_follow = Follow.objects.get(author=author,
                                         user=request.user)
-    if Follow.objects.filter(pk=profile_follow.pk).exists():
+    if Follow.objects.filter(pk=profile_follow.pk).delete():
         profile_follow.delete()
     return redirect('posts:profile', username=username)

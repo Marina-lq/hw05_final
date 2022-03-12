@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post, Group
+from .models import Post, Follow, Group, Comment
 
 admin.site.register(Group)
 
@@ -14,3 +14,16 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('pub_date',)
     # Это свойство сработает для всех колонок: где пусто — там будет эта строка
     empty_value_display = '-пусто-'
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("pk", "post", "author", "text", "created")
+    search_fields = ("post",)
+    list_filter = ("post",)
+    empty_value_display = "-пусто-"
+
+
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    list_display = ("user", "author")

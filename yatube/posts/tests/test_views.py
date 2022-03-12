@@ -1,5 +1,4 @@
 
-from django.contrib.auth import get_user_model
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django import forms
@@ -7,10 +6,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 import shutil
 import tempfile
 
-from posts.models import Post
+from posts.models import Post, Group, User
 from posts.models import Group
 
-User = get_user_model()
 MEDIA_ROOT = tempfile.mkdtemp()
 
 
