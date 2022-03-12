@@ -10,6 +10,7 @@ from posts.models import Comment
 
 User = get_user_model()
 
+
 class PostFormsTests(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -20,28 +21,23 @@ class PostFormsTests(TestCase):
         self.authorized_client = Client()
         self.authorized_client.force_login(self.user)
         self.guest_client = Client()
-        self.post = Post.objects.create(
-        author=self.user,
-        text='Тестовый текст',
-        )
+        self.post = Post.objects.create(author=self.user,
+                                        text='Тестовый текст')
 
-    def test_create_comment(self): 
+    def test_create_comment(self):
         comment_count = Comment.objects.count()
         form_data = {
             'text': 'Тестовый текст',
-             'author': self.user,         
+            'author': self.user,
         }
         response = self.authorized_client.post(
-            reverse('posts:add_comment',args=[self.post.id]),
+            reverse('posts:add_comment', args=[self.post.id]),
             data=form_data,
             follow=True
         )
         self.assertRedirects(response, reverse('posts:post_detail',
-                     kwargs={
-                    'post_id': self.post.pk}))
+                             kwargs={'post_id': self.post.pk}))
         self.assertEqual(Comment.objects.count(), comment_count + 1)
         self.assertTrue(
-            Comment.objects.filter(
-               author=self.user,
-               post=self.post.pk
-            ).exists())
+            Comment.objects.filter(author=self.user,
+                                   post=self.post.pk).exists())

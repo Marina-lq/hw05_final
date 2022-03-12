@@ -4,14 +4,15 @@ from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 from django import forms
 from django.core.files.uploadedfile import SimpleUploadedFile
-import shutil, tempfile
-
+import shutil
+import tempfile
 
 from posts.models import Post
 from posts.models import Group
 
 User = get_user_model()
 MEDIA_ROOT = tempfile.mkdtemp()
+
 
 @override_settings(MEDIA_ROOT=MEDIA_ROOT)
 class PostPagesTests(TestCase):
@@ -32,7 +33,7 @@ class PostPagesTests(TestCase):
             content=cls.small_gif,
             content_type='image/gif'
         )
-        
+
         cls.group = Group.objects.create(
             title='Заголовок группы',
             slug='group-slag',
@@ -79,7 +80,7 @@ class PostPagesTests(TestCase):
             reverse('posts:index'),
             reverse('posts:group_posts', kwargs={'slug': self.group.slug}),
             reverse('posts:profile', kwargs={'username':
-                                            self.user.username})
+                                             self.user.username})
         ]
         for reverse_name in templates_pages_names:
             with self.subTest(reverse_name=reverse_name):
@@ -132,12 +133,10 @@ class PostPagesTests(TestCase):
             reverse('posts:index'),
             reverse('posts:group_posts', kwargs={'slug': self.group.slug}),
             reverse('posts:profile', kwargs={'username':
-                                            self.user.username})
+                                             self.user.username})
         ]
         for reverse_name in templates_pages_names:
             with self.subTest(reverse_name=reverse_name):
                 response = self.authorized_client.get(reverse_name)
                 first_object = response.context['page_obj'][0]
                 self.assertEqual(first_object.group, self.post.group)
-
-                

@@ -1,18 +1,14 @@
 
-import shutil
-import tempfile
-
-from django import forms
 from django.contrib.auth import get_user_model
-from django.conf import settings
 from django.test import Client, TestCase
 from django.urls import reverse
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.cache import cache
 
 from posts.models import Group, Post
 
 User = get_user_model()
+
+
 class CacheViewsTest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -39,10 +35,13 @@ class CacheViewsTest(TestCase):
             text='test_new_post',
             author=CacheViewsTest.author,
         )
-        response_old = CacheViewsTest.authorized_client.get(reverse('posts:index'))
+        response_old = CacheViewsTest.authorized_client.get(reverse
+                                                            ('posts:index'))
         old_posts = response_old.content
-        self.assertEqual(old_posts, posts, 'Не возвращает кэшированную страницу.')
+        self.assertEqual(old_posts, posts,
+                         'Не возвращает кэшированную страницу.')
         cache.clear()
-        response_new = CacheViewsTest.authorized_client.get(reverse('posts:index'))
+        response_new = CacheViewsTest.authorized_client.get(reverse
+                                                            ('posts:index'))
         new_posts = response_new.content
         self.assertNotEqual(old_posts, new_posts, 'Нет сброса кэша.')

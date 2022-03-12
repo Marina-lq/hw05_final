@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import reverse
 from django.test import Client, TestCase
 
-from posts.models import Follow, Post
+from posts.models import Follow
 
 
 class CommentTest(TestCase):
@@ -46,5 +46,3 @@ class CommentTest(TestCase):
         follow_obj = Follow.objects.filter(user=self.user1,
                                            author=self.user2).count()
         self.assertEqual(follow_obj, 0)
-
-    
