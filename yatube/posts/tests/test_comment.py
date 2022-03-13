@@ -18,7 +18,7 @@ class PostFormsTests(TestCase):
         self.authorized_client.force_login(self.user)
         self.guest_client = Client()
         self.post = Post.objects.create(author=self.user,
-                                        text='Тестовый текст')
+                                        text='Тестовый текст',)
 
     def test_create_comment(self):
         comment_count = Comment.objects.count()

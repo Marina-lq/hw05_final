@@ -57,11 +57,11 @@ class Post(models.Model):
         blank=True
     )
 
-    class Meta:
-        ordering = ['-pub_date']
-
     def __str__(self):
         return self.text
+
+    class Meta:
+        ordering = ['-pub_date']
 
 
 class Comment(models.Model):
@@ -87,14 +87,7 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-
     user = models.ForeignKey(User, on_delete=models.CASCADE,
                              related_name="follower")
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name="following")
-
-    class Meta:
-
-        constraints = [
-            models.UniqueConstraint(fields=["author"],
-                                    name="unique_author")]

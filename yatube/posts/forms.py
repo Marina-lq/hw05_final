@@ -22,7 +22,6 @@ class PostForm(ModelForm):
             'text': 'Текст'
         }
 
-
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

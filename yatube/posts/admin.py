@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post, Follow, Group, Comment
+from .models import Post, Group, Comment, Follow
 
 admin.site.register(Group)
 
