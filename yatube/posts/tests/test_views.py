@@ -35,7 +35,7 @@ class PostPagesTests(TestCase):
             content=cls.small_gif,
             content_type='image/gif'
         )
-   
+
         cls.group = Group.objects.create(
             title='Заголовок группы',
             slug='group-slag',
