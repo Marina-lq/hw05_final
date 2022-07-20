@@ -1,3 +1,37 @@
-# hw05_final
+Простая социальная сеть. Блоги.
+Финальная часть проекта. В этот блок будет добавлена подписка на авторов, а также будет создана лента их постов Помимо основного функционала, дописаны следующие блоки:
 
-[![CI](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml)
+С помощью sorl-thumbnail выведены иллюстрации к постам
+Написаны тесты:
+на главную страницу
+на страницу профайла
+на страницу группы
+на отдельную страницу поста
+Создана система комментариев
+Кэширование главной страницы
+Тестирование кэша
+Инструкция по установке
+Клонируем репозиторий
+
+git clone https://github.com/iliazaraysky/hw05_final.git
+
+Переходим в папку с проектом
+
+cd hw05_final/
+
+Устанавливаем отдельное виртуальное окружение для проекта
+
+python -m venv venv
+
+Активируем виртуальное окружение
+
+venv\Scripts\activate
+
+Устанавливаем модули необходимые для работы проекта
+
+pip install -r requirements.txt
+
+Требования
+Python 3.6 +
+
+Работает под ОС Linux, Windows, macOS, BSD
